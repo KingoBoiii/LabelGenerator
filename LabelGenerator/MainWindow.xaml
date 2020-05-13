@@ -1,0 +1,36 @@
+﻿<Window x:Class="LabelGenerator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LabelGenerator"
+        xmlns:views="clr-namespace:LabelGenerator.Views"
+        xmlns:viewmodels="clr-namespace:LabelGenerator.ViewModels"
+        mc:Ignorable="d" ResizeMode="CanMinimize"
+        Title="{Binding Title}" Icon="Images/Logo/icon-512.png"
+        Height="{Binding Height,FallbackValue=450.0}" 
+        Width="{Binding Width,FallbackValue=300.0}">
+    <Window.Resources>
+        <DataTemplate x:Name="_MainViewTemplate" DataType="{x:Type viewmodels:MainViewViewModel}">
+            <views:MainView DataContext="{Binding ChildDataContext}"/>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="18"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Edit Template"/>
+                <Separator/>
+                <MenuItem Command="{Binding ExitCommand}" Header="_Exit"/>
+            </MenuItem>
+            <MenuItem Header="_About"/>
+        </Menu>
+        <ContentControl Grid.Row="1" Margin="5" Content="{Binding ChildDataContext}"/>
+        <!--
+        <Button Margin="5" FontSize="16" Command="{Binding ChildDataContext.GenerateCommand}" Content="Generate Output"/>
+        -->
+    </Grid>
+</Window>
