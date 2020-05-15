@@ -34,6 +34,8 @@ namespace LabelGenerator.ViewModels {
         /// Default constructor, creates an Instance of the WindowViewModel class
         /// </summary>
         public WindowViewModel(Window window) {
+            this.m_Model = new WindowModel();
+
             this.m_Window = window;
             this.m_Window.Loaded += (sender, e) => {
                 ChildDataContext = new MainViewViewModel();
@@ -42,7 +44,6 @@ namespace LabelGenerator.ViewModels {
                 ((MainViewViewModel)ChildDataContext).Closing();
             };
 
-            this.m_Model = new WindowModel();
 
             // Setting up Commands for the Window, MainWindow.
             ExitCommand = new RelayCommand(() => { m_Window.Close(); });

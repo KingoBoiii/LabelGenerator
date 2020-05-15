@@ -24,7 +24,7 @@ namespace LabelGenerator.Utils {
                 File.WriteAllText(filepath, jsonData);
 
 #if DEBUG
-                Trace.WriteLine($"Successfully saved {filepath}", "JsonUtil.SaveJson<T>");
+                // Trace.WriteLine($"Successfully saved {filepath}", "JsonUtil.SaveJson<T>");
 #endif
             } catch (Exception ex) {
                 Trace.WriteLine($"Exception: {ex.Message}", "JsonUtil.SaveJson<T>");
@@ -44,7 +44,7 @@ namespace LabelGenerator.Utils {
                 data = JsonConvert.DeserializeObject<T>(jsonString);
 #if DEBUG
                 if(data != null) {
-                    Trace.WriteLine($"Successfully loaded {filepath}", "JsonUtil.LoadJson<T>");
+                    // Trace.WriteLine($"Successfully loaded {filepath}", "JsonUtil.LoadJson<T>");
                 }
 #endif
             } catch (Exception ex) {

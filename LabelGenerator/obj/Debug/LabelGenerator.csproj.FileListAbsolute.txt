@@ -22,5 +22,3 @@ G:\CSharp\LabelGenerator\LabelGenerator\bin\Debug\Newtonsoft.Json.xml
 G:\CSharp\LabelGenerator\LabelGenerator\obj\Debug\LabelGenerator.csproj.CopyComplete
 G:\CSharp\LabelGenerator\LabelGenerator\obj\Debug\Windows\EditTemplateWindow.g.cs
 G:\CSharp\LabelGenerator\LabelGenerator\obj\Debug\Windows\EditTemplateWindow.baml
-G:\CSharp\LabelGenerator\LabelGenerator\obj\Debug\Views\EditTemplateView.g.cs
-G:\CSharp\LabelGenerator\LabelGenerator\obj\Debug\Views\EditTemplateView.baml

@@ -8,11 +8,6 @@
         xmlns:viewmodels="clr-namespace:LabelGenerator.ViewModels"
         mc:Ignorable="d" Icon="../Images/Logo/icon-512.png"
         Title="Edit Template" Height="450" Width="400">
-    <Window.Resources>
-        <DataTemplate x:Name="_EditTemplateTemplate" DataType="{x:Type viewmodels:EditTemplateViewModel}">
-            <views:EditTemplateView DataContext="{Binding ChildDataContext}"/>
-        </DataTemplate>
-    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="18"/>
@@ -21,12 +16,12 @@
         <Menu Grid.Row="0">
             <MenuItem Header="_File">
                 <MenuItem Header="_New"/>
-                <MenuItem Header="_Open"/>
+                <MenuItem Command="{Binding OpenCommand}" Header="_Open"/>
                 <MenuItem Header="_Save"/>
                 <Separator/>
                 <MenuItem Command="{Binding ExitCommand}" Header="_Exit"/>
             </MenuItem>
         </Menu>
-        <ContentControl Grid.Row="1" Margin="5" Content="{Binding ChildDataContext}"/>
+        <TextBox Grid.Row="1" Margin="5" Text="{Binding TemplateText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True"/>
     </Grid>
 </Window>

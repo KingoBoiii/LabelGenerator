@@ -58,7 +58,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Models\EditTemplateModel.cs" />
     <Compile Include="Models\EditTemplateWindowModel.cs" />
     <Compile Include="Models\MainViewModel.cs" />
     <Compile Include="Models\WindowModel.cs" />
@@ -66,14 +65,10 @@
     <Compile Include="Utils\JsonUtil.cs" />
     <Compile Include="Utils\StringUtil.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
-    <Compile Include="ViewModels\EditTemplateViewModel.cs" />
     <Compile Include="ViewModels\EditTemplateWindowViewModel.cs" />
     <Compile Include="ViewModels\MainViewViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\WindowViewModel.cs" />
-    <Compile Include="Views\EditTemplateView.xaml.cs">
-      <DependentUpon>EditTemplateView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
@@ -93,10 +88,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Styles\Fonts.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\EditTemplateView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -72,9 +72,6 @@ namespace LabelGenerator.ViewModels {
             if (m_Model == null) {
                 m_Model = new MainViewModel();
                 JsonUtil.SaveJson<MainViewModel>("SaveData.json", m_Model);
-#if DEBUG
-                Trace.WriteLine("Created new SaveData.json file", "Constructor");
-#endif
             }
 
             // FileUtil.SaveFile("test.txt", "Hello, world");
@@ -92,22 +89,16 @@ namespace LabelGenerator.ViewModels {
         }
 
         public void Closing() {
-#if DEBUG
-            Trace.WriteLine("Closing, saving .json file...");
-#endif
             JsonUtil.SaveJson<MainViewModel>("SaveData.json", m_Model);
-#if DEBUG
-            Trace.WriteLine("Closing, successfully saved .json file!");
-#endif
         }
 
         /// <summary>
         /// The method that generate the output label
         /// </summary>
         private void GenerateOutput() {
-            JsonUtil.SaveJson<MainViewModel>("SaveData.json", m_Model);
             Number++;
-            // Trace.WriteLine("Generating Output..."); 
+
+            JsonUtil.SaveJson<MainViewModel>("SaveData.json", m_Model);
         }
     }
 }

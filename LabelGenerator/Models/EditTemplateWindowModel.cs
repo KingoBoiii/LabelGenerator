@@ -1,5 +1,5 @@
 ﻿namespace LabelGenerator.Models {
     public class EditTemplateWindowModel {
-        public object ChildDataContext { get; set; } = null;
+        public string TemplateText { get; set; } = string.Empty;
     }
 }
