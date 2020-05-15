@@ -41,10 +41,17 @@ namespace LabelGenerator.Models {
             }
         }
 
+        private string m_IMEINumber;
+        public string IMEINumber { 
+            get { return m_IMEINumber; }
+            set { m_IMEINumber = value; }
+        }
+
         public MainViewModel(int year = 0, int week = 1, int number = 0) {
             this.Year = year;
             this.Week = week;
             this.Number = number;
+            this.IMEINumber = new string('0', 15);
         }
     }
 }

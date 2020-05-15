@@ -3,6 +3,7 @@ using System.Windows.Input;
 
 namespace LabelGenerator.ViewModels {
     using LabelGenerator.Models;
+    using LabelGenerator.Windows;
 
     public class WindowViewModel : BaseViewModel {
         private readonly Window m_Window;
@@ -27,6 +28,7 @@ namespace LabelGenerator.ViewModels {
         }
 
         public ICommand ExitCommand { get; set; }
+        public ICommand EditTemplateCommand { get; set; }
 
         /// <summary>
         /// Default constructor, creates an Instance of the WindowViewModel class
@@ -44,6 +46,7 @@ namespace LabelGenerator.ViewModels {
 
             // Setting up Commands for the Window, MainWindow.
             ExitCommand = new RelayCommand(() => { m_Window.Close(); });
+            EditTemplateCommand = new RelayCommand(() => { new EditTemplateWindow().Show(); });
         }
     }
 }

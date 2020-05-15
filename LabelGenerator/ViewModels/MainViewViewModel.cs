@@ -6,7 +6,7 @@ namespace LabelGenerator.ViewModels {
     using LabelGenerator.Utils;
 
     public class MainViewViewModel : BaseViewModel {
-        private MainViewModel m_Model;
+        private static MainViewModel m_Model;
 
         public int Year {
             get { return m_Model.Year; }
@@ -43,6 +43,16 @@ namespace LabelGenerator.ViewModels {
 
         public string SerialNumberOutput { get { return "Serial Number: " + m_Model.SerialNumber; } }
 
+        public string IMEINumber {
+            get { return m_Model.IMEINumber; }
+            set {
+                if(m_Model.IMEINumber != value) {
+                    m_Model.IMEINumber = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public ICommand AddYearCommand { get; set; }
         public ICommand SubYearCommand { get; set; }
 
@@ -67,6 +77,8 @@ namespace LabelGenerator.ViewModels {
 #endif
             }
 
+            // FileUtil.SaveFile("test.txt", "Hello, world");
+
             AddYearCommand = new RelayCommand(() => { Year++; });
             SubYearCommand = new RelayCommand(() => { Year--; });
 
@@ -80,10 +92,13 @@ namespace LabelGenerator.ViewModels {
         }
 
         public void Closing() {
-            Trace.WriteLine($"({m_Model.Year} / {Year}), ({m_Model.Week} / {Week}), ({m_Model.Number} / {Number})");
-
-            Trace.WriteLine("Closing, saving .json file");
+#if DEBUG
+            Trace.WriteLine("Closing, saving .json file...");
+#endif
             JsonUtil.SaveJson<MainViewModel>("SaveData.json", m_Model);
+#if DEBUG
+            Trace.WriteLine("Closing, successfully saved .json file!");
+#endif
         }
 
         /// <summary>

@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 G:\CSharp\LabelGenerator\LabelGenerator\App.xaml
-3954224689
+51798086635
 
-15566623812
+22271619762
 14-311243093
-MainWindow.xaml;Styles\Fonts.xaml;Views\MainView.xaml;
+MainWindow.xaml;Styles\Fonts.xaml;Views\EditTemplateView.xaml;Views\MainView.xaml;Windows\EditTemplateWindow.xaml;
 
 False
 

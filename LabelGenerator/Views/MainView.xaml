@@ -73,7 +73,7 @@
             <TextBlock Text="IMEI Number" FontSize="20" TextAlignment="Center"/>
             <TabControl>
                 <TabItem Header="_Single">
-                    <TextBox Text="300234063937470" MaxLength="15"/>
+                    <TextBox Text="{Binding IMEINumber,FallbackValue='000000000000000'}" MaxLength="15"/>
                 </TabItem>
                 <TabItem Header="_Multiple">
                     <StackPanel>
