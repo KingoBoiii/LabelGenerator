@@ -2,6 +2,7 @@
 using System.Windows.Input;
 
 namespace LabelGenerator.ViewModels {
+    using LabelGenerator.Utils;
     using LabelGenerator.Models;
     using LabelGenerator.Windows;
 

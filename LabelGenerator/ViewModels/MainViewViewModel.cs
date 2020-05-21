@@ -1,13 +1,16 @@
-﻿using System.Diagnostics;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
 namespace LabelGenerator.ViewModels {
-    using LabelGenerator.Models;
+    using LabelGenerator.Data;
     using LabelGenerator.Utils;
+    using LabelGenerator.Models;
 
     public class MainViewViewModel : BaseViewModel {
         private static MainViewModel m_Model;
 
+        /// <summary>
+        /// Integer representation of Year.
+        /// </summary>
         public int Year {
             get { return m_Model.Year; }
             set {
@@ -19,6 +22,9 @@ namespace LabelGenerator.ViewModels {
             }
         }
 
+        /// <summary>
+        /// Integer representation of Week.
+        /// </summary>
         public int Week {
             get { return m_Model.Week; }
             set {
@@ -30,6 +36,9 @@ namespace LabelGenerator.ViewModels {
             }
         }
 
+        /// <summary>
+        /// Integer representation of Number.
+        /// </summary>
         public int Number {
             get { return m_Model.Number; }
             set {
@@ -41,8 +50,14 @@ namespace LabelGenerator.ViewModels {
             }
         }
 
+        /// <summary>
+        /// The output value of Serial Number, represented in stirng.
+        /// </summary>
         public string SerialNumberOutput { get { return "Serial Number: " + m_Model.SerialNumber; } }
 
+        /// <summary>
+        /// String representation of IMEI number
+        /// </summary>
         public string IMEINumber {
             get { return m_Model.IMEINumber; }
             set {
@@ -73,8 +88,7 @@ namespace LabelGenerator.ViewModels {
                 m_Model = new MainViewModel();
                 JsonUtil.SaveJson<MainViewModel>("SaveData.json", m_Model);
             }
-
-            // FileUtil.SaveFile("test.txt", "Hello, world");
+            AppData.Instance.Template = FileUtil.ReadFile("_template_.txt");
 
             AddYearCommand = new RelayCommand(() => { Year++; });
             SubYearCommand = new RelayCommand(() => { Year--; });
@@ -97,6 +111,9 @@ namespace LabelGenerator.ViewModels {
         /// </summary>
         private void GenerateOutput() {
             Number++;
+
+            string outputData = Formatter.GenerateStringOutput(m_Model.SerialNumber, m_Model.IMEINumber);
+            FileUtil.WriteFile(m_Model.SerialNumber + ".txt", outputData);
 
             JsonUtil.SaveJson<MainViewModel>("SaveData.json", m_Model);
         }
