@@ -70,7 +70,15 @@ namespace LabelGenerator.ViewModels {
             }
         }
 
-        public ObservableCollection<string> ExcelIMEINumbers { get; set; }
+        public ObservableCollection<string> ExcelIMEINumbers {
+            get { return m_Model.IMEINumbers; }
+            set {
+                if (m_Model.IMEINumbers != value) {
+                    m_Model.IMEINumbers = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public ICommand AddYearCommand { get; set; }
         public ICommand SubYearCommand { get; set; }
@@ -82,6 +90,7 @@ namespace LabelGenerator.ViewModels {
         public ICommand SubNumberCommand { get; set; }
 
         public ICommand LoadExcelFileCommand { get; set; }
+        public ICommand ClearCommand { get; set; }
 
         public ICommand GenerateCommand { get; set; }
 
@@ -111,7 +120,10 @@ namespace LabelGenerator.ViewModels {
                 FileUtil.OpenDialog(out string filepath, "Excel Workbook | *.xlsx");
                 ObservableCollection<string> imeiNumbers = OfficeUtil.OpenExcelFile(filepath);
                 ExcelIMEINumbers = imeiNumbers;
-                OnPropertyChanged(nameof(ExcelIMEINumbers));
+            });
+
+            ClearCommand = new RelayCommand(() => {
+                ExcelIMEINumbers.Clear();
             });
 
             GenerateCommand = new RelayCommand(GenerateOutput);
@@ -125,19 +137,12 @@ namespace LabelGenerator.ViewModels {
         /// The method that generate the output label
         /// </summary>
         private void GenerateOutput() {
-            var count = ExcelIMEINumbers.Count;
-            if(count < 10) {
-                ExcelIMEINumbers.Add("Hello, world");
-            }
-
-#if false
             string outputData = Formatter.GenerateStringOutput(m_Model.SerialNumber, m_Model.IMEINumber);
             FileUtil.WriteFile(m_Model.SerialNumber + ".txt", outputData);
 
             JsonUtil.SaveJson<MainViewModel>(AppData.Instance.SaveDataFileName, m_Model);
 
             Number++;
-#endif
         }
     }
 }

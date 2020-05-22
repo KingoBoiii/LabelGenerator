@@ -77,11 +77,15 @@
                 </TabItem>
                 <TabItem Header="_Multiple">
                     <StackPanel>
-                        <Button Command="{Binding LoadExcelFileCommand}" Content="Load Excel File"/>
-                        <StackPanel Visibility="Visible">
-                            <ListView ItemsSource="{Binding ExcelIMEINumbers}" MaxHeight="130">
-                            </ListView>
-                        </StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Margin="1 1 5 1" Command="{Binding LoadExcelFileCommand}" Content="Load Excel" Grid.Column="0" />
+                            <Button Margin="5 1 1 1" Command="{Binding ClearCommand}" Content="Clear" Grid.Column="1" />
+                        </Grid>
+                        <ListView ItemsSource="{Binding ExcelIMEINumbers}" MaxHeight="130"/>
                     </StackPanel>
                 </TabItem>
             </TabControl>

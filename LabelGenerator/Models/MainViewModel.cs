@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 
 namespace LabelGenerator.Models {
     using LabelGenerator.Utils;
@@ -41,11 +42,9 @@ namespace LabelGenerator.Models {
             }
         }
 
-        private string m_IMEINumber;
-        public string IMEINumber { 
-            get { return m_IMEINumber; }
-            set { m_IMEINumber = value; }
-        }
+        public string IMEINumber { get; set; }
+
+        public ObservableCollection<string> IMEINumbers { get; set; }
 
         public MainViewModel(int year = 0, int week = 1, int number = 0) {
             this.Year = year;
