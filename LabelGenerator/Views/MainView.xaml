@@ -77,19 +77,9 @@
                 </TabItem>
                 <TabItem Header="_Multiple">
                     <StackPanel>
-                        <Button Content="Load Excel File"/>
+                        <Button Command="{Binding LoadExcelFileCommand}" Content="Load Excel File"/>
                         <StackPanel Visibility="Visible">
-                            <ListView MaxHeight="130">
-                                <ListViewItem Content="Hello"/>
-                                <ListViewItem Content="Hello"/>
-                                <ListViewItem Content="Hello"/>
-                                <ListViewItem Content="Hello"/>
-                                <ListViewItem Content="Hello"/>
-                                <ListViewItem Content="Hello"/>
-                                <ListViewItem Content="Hello"/>
-                                <ListViewItem Content="Hello"/>
-                                <ListViewItem Content="Hello"/>
-                                <ListViewItem Content="Hello"/>
+                            <ListView ItemsSource="{Binding ExcelIMEINumbers}" MaxHeight="130">
                             </ListView>
                         </StackPanel>
                     </StackPanel>

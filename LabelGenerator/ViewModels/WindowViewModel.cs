@@ -2,7 +2,6 @@
 using System.Windows.Input;
 
 namespace LabelGenerator.ViewModels {
-    using LabelGenerator.Utils;
     using LabelGenerator.Models;
     using LabelGenerator.Windows;
 
@@ -31,6 +30,8 @@ namespace LabelGenerator.ViewModels {
         public ICommand ExitCommand { get; set; }
         public ICommand EditTemplateCommand { get; set; }
 
+        private Window m_EditTemplateWindow;
+
         /// <summary>
         /// Default constructor, creates an Instance of the WindowViewModel class
         /// </summary>
@@ -42,13 +43,27 @@ namespace LabelGenerator.ViewModels {
                 ChildDataContext = new MainViewViewModel();
             };
             this.m_Window.Closed += (sender, e) => {
+                if (m_EditTemplateWindow != null) {
+                    m_EditTemplateWindow.Close();
+                }
+
                 ((MainViewViewModel)ChildDataContext).Closing();
+                ChildDataContext = null;
             };
 
 
             // Setting up Commands for the Window, MainWindow.
-            ExitCommand = new RelayCommand(() => { m_Window.Close(); });
-            EditTemplateCommand = new RelayCommand(() => { new EditTemplateWindow().Show(); });
+            ExitCommand = new RelayCommand(() => {
+                if (m_EditTemplateWindow != null) {
+                    m_EditTemplateWindow.Close();
+                }
+                m_Window.Close();
+            });
+            EditTemplateCommand = new RelayCommand(() => { 
+                m_EditTemplateWindow = new EditTemplateWindow();
+                m_EditTemplateWindow.Closed += (sender, e) => { m_EditTemplateWindow = null; };
+                m_EditTemplateWindow.Show();
+            });
         }
     }
 }

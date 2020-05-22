@@ -1,34 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Diagnostics;
 using Microsoft.Win32;
 
 namespace LabelGenerator.Utils {
     public static class FileUtil {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="data"></param>
-        /// <param name="filter"></param>
-        public static void OpenAndReadFileDialog(out string data, string filter = "Text Files (*.txt)|*.txt") {
-            data = string.Empty;
-            // Configure open file dialog box
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            // openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-            openFileDialog.Filter = filter;
-
-            // Show open file dialog box
-            Nullable<bool> result = openFileDialog.ShowDialog();
-
-            if (result == true) {
-                string filepath = openFileDialog.FileName;
-                data = ReadFile(filepath);
-            }
-        }
-
         /// <summary>
         /// Reading text data from a textfile, and returns the string data
         /// </summary>
@@ -73,6 +50,31 @@ namespace LabelGenerator.Utils {
                 fs.Close();
                 fs.Dispose();
             }
+        }
+
+        public static bool DoesFileExists(string filepath) {
+            return File.Exists(filepath);
+        }
+
+        /// <summary>
+        /// Opens a File Dialog to get the <paramref name="filepath"/> of a file.
+        /// </summary>
+        /// <param name="filepath"></param>
+        /// <param name="filter"></param>
+        /// <param name="initDirectory"></param>
+        public static void OpenDialog(out string filepath, string filter, Environment.SpecialFolder initDirectory = Environment.SpecialFolder.MyDocuments) {
+            OpenFileDialog fileDialog = new OpenFileDialog {
+                Filter = filter, ShowReadOnly = true, Multiselect = false, Title = "Open File Dialog",
+                ValidateNames = true, CheckFileExists = true, CheckPathExists = true, 
+                InitialDirectory = Environment.GetFolderPath(initDirectory),
+            };
+
+            Nullable<bool> result = fileDialog.ShowDialog();
+            if(result == true) {
+                filepath = fileDialog.FileName;
+                return;
+            }
+            filepath = string.Empty;
         }
     }
 }

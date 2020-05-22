@@ -1,4 +1,6 @@
 ﻿using System.Windows.Input;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace LabelGenerator.ViewModels {
     using LabelGenerator.Data;
@@ -68,6 +70,8 @@ namespace LabelGenerator.ViewModels {
             }
         }
 
+        public ObservableCollection<string> ExcelIMEINumbers { get; set; }
+
         public ICommand AddYearCommand { get; set; }
         public ICommand SubYearCommand { get; set; }
 
@@ -77,18 +81,22 @@ namespace LabelGenerator.ViewModels {
         public ICommand AddNumberCommand { get; set; }
         public ICommand SubNumberCommand { get; set; }
 
+        public ICommand LoadExcelFileCommand { get; set; }
+
         public ICommand GenerateCommand { get; set; }
 
         /// <summary>
         /// Default constructor, creates an Instance of the MainViewViewModel class
         /// </summary>
         public MainViewViewModel() {
-            JsonUtil.LoadJson<MainViewModel>("SaveData.json", out m_Model);
+            JsonUtil.LoadJson<MainViewModel>(AppData.Instance.SaveDataFileName, out m_Model);
             if (m_Model == null) {
                 m_Model = new MainViewModel();
-                JsonUtil.SaveJson<MainViewModel>("SaveData.json", m_Model);
+                JsonUtil.SaveJson<MainViewModel>(AppData.Instance.SaveDataFileName, m_Model);
             }
-            AppData.Instance.Template = FileUtil.ReadFile("_template_.txt");
+            AppData.Instance.Template = FileUtil.ReadFile(AppData.Instance.TemplateFileName);
+
+            ExcelIMEINumbers = new ObservableCollection<string>();
 
             AddYearCommand = new RelayCommand(() => { Year++; });
             SubYearCommand = new RelayCommand(() => { Year--; });
@@ -99,23 +107,37 @@ namespace LabelGenerator.ViewModels {
             AddNumberCommand = new RelayCommand(() => { Number++; });
             SubNumberCommand = new RelayCommand(() => { Number--; });
 
+            LoadExcelFileCommand = new RelayCommand(() => {
+                FileUtil.OpenDialog(out string filepath, "Excel Workbook | *.xlsx");
+                ObservableCollection<string> imeiNumbers = OfficeUtil.OpenExcelFile(filepath);
+                ExcelIMEINumbers = imeiNumbers;
+                OnPropertyChanged(nameof(ExcelIMEINumbers));
+            });
+
             GenerateCommand = new RelayCommand(GenerateOutput);
         }
 
         public void Closing() {
-            JsonUtil.SaveJson<MainViewModel>("SaveData.json", m_Model);
+            JsonUtil.SaveJson<MainViewModel>(AppData.Instance.SaveDataFileName, m_Model);
         }
 
         /// <summary>
         /// The method that generate the output label
         /// </summary>
         private void GenerateOutput() {
-            Number++;
+            var count = ExcelIMEINumbers.Count;
+            if(count < 10) {
+                ExcelIMEINumbers.Add("Hello, world");
+            }
 
+#if false
             string outputData = Formatter.GenerateStringOutput(m_Model.SerialNumber, m_Model.IMEINumber);
             FileUtil.WriteFile(m_Model.SerialNumber + ".txt", outputData);
 
-            JsonUtil.SaveJson<MainViewModel>("SaveData.json", m_Model);
+            JsonUtil.SaveJson<MainViewModel>(AppData.Instance.SaveDataFileName, m_Model);
+
+            Number++;
+#endif
         }
     }
 }

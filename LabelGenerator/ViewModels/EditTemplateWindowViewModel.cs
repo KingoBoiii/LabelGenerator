@@ -1,8 +1,5 @@
-﻿using System;
-using System.Windows;
-using System.Diagnostics;
+﻿using System.Windows;
 using System.Windows.Input;
-using Microsoft.Win32;
 
 namespace LabelGenerator.ViewModels {
     using LabelGenerator.Data;
@@ -36,21 +33,19 @@ namespace LabelGenerator.ViewModels {
         public EditTemplateWindowViewModel(Window window) {
             this.m_Window = window;
             this.m_Model = new EditTemplateWindowModel();
-
-            this.m_Window.Loaded += (sender, e) => {
-                this.TemplateText = AppData.Instance.Template;
-            };
+            this.TemplateText = AppData.Instance.Template;
 
             NewCommand = new RelayCommand(() => {
                 TemplateText = "";
             });
             OpenCommand = new RelayCommand(() => {
-                string data = string.Empty;
-                FileUtil.OpenAndReadFileDialog(out data);
+                FileUtil.OpenDialog(out string filepath, "Text Files (*.txt)|*.txt");
+                string data = FileUtil.ReadFile(filepath);
+
                 TemplateText = data;
             });
             SaveCommand = new RelayCommand(() => {
-                FileUtil.WriteFile("_template_.txt", TemplateText);
+                FileUtil.WriteFile(AppData.Instance.TemplateFileName, TemplateText);
             });
             ExitCommand = new RelayCommand(() => { this.m_Window.Close(); });
         }

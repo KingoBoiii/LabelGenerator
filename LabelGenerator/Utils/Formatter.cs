@@ -8,19 +8,19 @@ namespace LabelGenerator.Utils {
             public string WordToReplace { get; set; }
             public string Word { get; set; }
         }
-        private static List<FormattingData> formattingDatas = new List<FormattingData>() {
-            new FormattingData{ WordToReplace="#SERIALNUMBER#", Word="" },
-            new FormattingData{ WordToReplace="#IMEINUMBER#", Word="" },
+        private static Dictionary<string, string> _formattingDatas = new Dictionary<string, string>() {
+            { "#SERIALNUMBER#", "" },
+            { "#IMEINUMBER#", "" },
         };
 
         public static string GenerateStringOutput(string serialNumber, string imeiNumber) {
             string result = AppData.Instance.Template;
 
-            formattingDatas[0].Word = serialNumber;
-            formattingDatas[1].Word = imeiNumber;
+            _formattingDatas["#SERIALNUMBER#"] = serialNumber;
+            _formattingDatas["#IMEINUMBER#"] = imeiNumber;
 
-            foreach (var data in formattingDatas) {
-                result = result.Replace(data.WordToReplace, data.Word);
+            foreach (var data in _formattingDatas) {
+                result = result.Replace(data.Key, data.Value);
             }
             return result;
         }
